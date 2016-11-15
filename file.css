@@ -1,0 +1,8 @@
+.mdl-layout__header{
+	height:30%;
+}
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    background: url("Profile pic.jpg") no-repeat;
+    background-size:406px 406px	
+}
