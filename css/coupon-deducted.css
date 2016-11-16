@@ -6,3 +6,7 @@
     background: url("../assets/Profile pic.jpg") no-repeat;
     background-size:406px 406px	
 }
+
+section.section--center.mdl-grid.mdl-grid--no-spacing {
+  margin-bottom: 500px;
+}
