@@ -47,17 +47,17 @@
                      <thead>
                         <tr>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                           	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                           	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="makePayment(1700)">
                                Rs 1700/-
                             </button>
                            </th>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                           	  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                           	  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"  onclick="makePayment(2000)">
                                  Rs 2000/-
                               </button>
                            </th>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="makePayment(2200)">
                                  Rs 2200/-
                               </button>
                            </th>
@@ -68,5 +68,48 @@
       	 </main>
       	 </div>
       <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+      <script>
+        function makePayment(n) {
+          var req
+          switch(n) {
+            case 1700:
+              req = [20, 20, 20, 20]
+              break;
+            case 2000:
+              req = [25, 25, 25, 25]
+              break;
+            case 2200:
+              req = [30, 30, 30, 30]
+              break;
+          }
+          
+          var url = "http://smmini-peey.rhcloud.com/api/add-coupon"
+          var id = 123
+          var completed = new Promise (function (resolve, reject) {
+            var successcount = 0
+
+            var handler = function (a,b, xhr) {
+              if (xhr.status == 202) {
+                successcount++
+              } else {
+                reject()
+              }
+              if (successcount == 4) {
+                resolve()
+              }
+            }
+
+            $.get(url, {id: id, type: "breakfast", number: req[0]}).always(handler)
+            $.get(url, {id: id, type: "lunch", number: req[1]}).always(handler)
+            $.get(url, {id: id, type: "evening", number: req[2]}).always(handler)
+            $.get(url, {id: id, type: "dinner", number: req[3]}).always(handler)
+          })
+          
+          completed.then(function () {alert("All coupons added")}).catch(function () {alert("Sorry, an error occured")})
+        }
+        
+        
+      </script>
    </body>
 </html>
