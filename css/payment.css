@@ -9,7 +9,7 @@
 }
 .demo-card-wide > .mdl-card__title {
   color: #fff;
-  background: url("../assets/Profile pic.jpg") no-repeat;
+  background: url("../assets/donald-knuth.jpg") no-repeat;
   background-size:cover;	
 }
 .mdl-layout__header{
