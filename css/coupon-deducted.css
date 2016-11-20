@@ -1,0 +1,12 @@
+.mdl-layout__header{
+	height:30%;
+}
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    background: url("../assets/donald-knuth.jpg") no-repeat;
+    background-size:406px 406px	
+}
+
+section.section--center.mdl-grid.mdl-grid--no-spacing {
+  margin-bottom: 500px;
+}

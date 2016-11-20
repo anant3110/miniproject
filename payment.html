@@ -1,20 +1,4 @@
 <!doctype html>
-<!--
-   Material Design Lite
-   Copyright 2015 Google Inc. All rights reserved.
-   
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-   
-       https://www.apache.org/licenses/LICENSE-2.0
-   
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License
-   -->
 <html lang="en">
    <head>
       <meta charset="utf-8">
@@ -34,35 +18,12 @@
       <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
       <meta name="msapplication-TileColor" content="#3372DF">
       <link rel="shortcut icon" href="images/favicon.png">
-      <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-      <!--
-         <link rel="canonical" href="http://www.example.com/">
-         -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.deep_orange-red.min.css" />
-      <link rel="stylesheet" href="styles.css">
-      <style>
-         #view-source {
-         position: fixed;
-         display: block;
-         right: 0;
-         bottom: 0;
-         margin-right: 40px;
-         margin-bottom: 40px;
-         z-index: 900;
-         }
-         .demo-card-wide > .mdl-card__title {
-         color: #fff;
-         background: url("Profile pic.jpg") no-repeat;
-         background-size:cover;	
-         }
-         .mdl-layout__header{
-		 	height: 25%;
-		 }   
-      </style>
+      <link rel="stylesheet" href="css/payment.css">
    </head>
-   <body style="background: url('money.jpg');" class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+   <body style="background: url('../assets/money.jpg');" class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
          <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
             <div class="mdl-layout--large-screen-only mdl-layout__header-row">
@@ -72,31 +33,31 @@
             </div>
          </header>
          <main class="mdl-layout__content">
-         <div style="margin-left: 600px; margin-top: 50px; height:420px; width:406px" class="demo-card-wide mdl-card mdl-shadow--2dp">
+         <div style="margin-left: auto; margin-right: auto; margin-top: 50px; height:420px; width:406px" class="demo-card-wide mdl-card mdl-shadow--2dp">
                      <div class="mdl-card__title mdl-card--expand">
-                        <h1 class="mdl-card__title-text">Dr. Dheeraj Sanghi</h1>
+                        <h1 class="mdl-card__title-text">Donald Knuth</h1>
                      </div>
                      <div class="mdl-card__supporting-text">
                         2016069
                      </div>
-                     </div>
+         </div>
                      </section>
                <section class="section--center mdl-grid mdl-grid--no-spacing">
-                  <table style="margin-left:39.125%; margin-top:5px;" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+                  <table style="margin-left:auto; margin-right:auto; margin-top:5px;" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
                      <thead>
                         <tr>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                           	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                           	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="makePayment(1700)">
                                Rs 1700/-
                             </button>
                            </th>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                           	  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                           	  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"  onclick="makePayment(2000)">
                                  Rs 2000/-
                               </button>
                            </th>
                            <th style="height:60px;" class="mdl-data-table__cell--non-numeric">
-                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="makePayment(2200)">
                                  Rs 2200/-
                               </button>
                            </th>
@@ -107,5 +68,48 @@
       	 </main>
       	 </div>
       <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+      <script>
+        function makePayment(n) {
+          var req
+          switch(n) {
+            case 1700:
+              req = [20, 20, 20, 20]
+              break;
+            case 2000:
+              req = [25, 25, 25, 25]
+              break;
+            case 2200:
+              req = [30, 30, 30, 30]
+              break;
+          }
+          
+          var url = "http://smmini-peey.rhcloud.com/api/add-coupon"
+          var id = 123
+          var completed = new Promise (function (resolve, reject) {
+            var successcount = 0
+
+            var handler = function (a,b, xhr) {
+              if (xhr.status == 202) {
+                successcount++
+              } else {
+                reject()
+              }
+              if (successcount == 4) {
+                resolve()
+              }
+            }
+
+            $.get(url, {id: id, type: "breakfast", number: req[0]}).always(handler)
+            $.get(url, {id: id, type: "lunch", number: req[1]}).always(handler)
+            $.get(url, {id: id, type: "evening", number: req[2]}).always(handler)
+            $.get(url, {id: id, type: "dinner", number: req[3]}).always(handler)
+          })
+          
+          completed.then(function () {alert("All coupons added")}).catch(function () {alert("Sorry, an error occured")})
+        }
+        
+        
+      </script>
    </body>
 </html>
